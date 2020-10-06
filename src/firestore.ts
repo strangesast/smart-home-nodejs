@@ -1,17 +1,3 @@
-/* Copyright 2018, Google, Inc.
- * Licensed under the Apache License, Version 2.0 (the 'License');
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an 'AS IS' BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 /**
  * Communicates with Firestore for a user's devices to control them or read
  * the current state.
@@ -23,7 +9,7 @@ import { ApiClientObjectMap } from 'actions-on-google/dist/common'
 import {googleCloudProjectId} from './config-provider'
 
 admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
+  credential: admin.credential.cert('firebase-admin-key.json'),
   databaseURL: `https://${googleCloudProjectId}.firebaseio.com`,
 })
 const db = admin.firestore()

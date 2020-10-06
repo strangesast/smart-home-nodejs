@@ -6,3 +6,4 @@ dist/
 # service account keys
 src/*.json
 .firebaserc
+firebase-admin-key.json

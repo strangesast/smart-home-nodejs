@@ -1,23 +1,8 @@
-/* Copyright 2017, Google, Inc.
- * Licensed under the Apache License, Version 2.0 (the 'License');
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an 'AS IS' BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 /**
  * This is the main server code that processes requests and sends responses
  * back to users and to the HomeGraph.
  */
 
-// Express imports
 import * as express from 'express'
 import * as bodyParser from 'body-parser'
 import * as cors from 'cors'
@@ -25,14 +10,12 @@ import * as morgan from 'morgan'
 import * as ngrok from 'ngrok'
 import { AddressInfo } from 'net'
 
-// Smart home imports
 import {
   smarthome,
   SmartHomeV1ExecuteResponseCommands,
   Headers,
 } from 'actions-on-google'
 
-// Local imports
 import * as Firestore from './firestore'
 import * as Auth from './auth-provider'
 import * as Config from './config-provider'
@@ -54,13 +37,8 @@ try {
   console.warn('Report state and Request sync will be unavailable')
 }
 
-const app = smarthome({
-  jwt,
-  debug: true,
-})
+const app = smarthome({ jwt, debug: true })
 
-// Array could be of any type
-// tslint:disable-next-line
 async function asyncForEach(array: any[], callback: Function) {
   for (let index = 0; index < array.length; index++) {
     await callback(array[index], index, array)
@@ -225,6 +203,8 @@ app.onDisconnect(async (body, headers) => {
   const userId = await getUserIdOrThrow(headers)
   await Firestore.disconnect(userId)
 })
+
+expressApp.get('/smarthome', (req, res) => res.send('toast!'))
 
 expressApp.post('/smarthome', app)
 
